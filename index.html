@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Spirits Collection - For Distributors</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            color: #333;
+            line-height: 1.6;
+            background-color: #f9f5f0; /* Light neutral background */
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        
+        section {
+            padding: 60px 0;
+        }
+        
+        h1, h2, h3 {
+            font-weight: 300;
+            color: #2c2c2c;
+        }
+        
+        /* Header */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: #8a1538; /* Deep wine color */
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 30px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #8a1538;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1474722883778-792e7990302f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #8a1538;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #6a102c;
+        }
+        
+        /* Products Section */
+        .products-intro {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        /* --- Product Image Container --- */
+        .product-image {
+            height: 300px;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden; /* Essential for containing the zoom effect */
+            cursor: zoom-in; /* Show a zoom-in cursor to hint at the interaction */
+        }
+        
+        /* --- Product Image Itself --- */
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Show full image */
+            transition: transform 0.3s ease; /* Smooth transition for the zoom */
+        }
+        
+        /* --- Hover Zoom Effect --- */
+        .product-card:hover .product-image img {
+            transform: scale(1.05); /* Slight zoom on card hover */
+        }
+
+        /* --- Hover Zoom Effect (Fallback if JS is disabled) --- */
+        .product-image:hover img {
+            transform: scale(1.8); /* Strong zoom as a fallback */
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #8a1538;
+        }
+        
+        .product-info .product-subtitle {
+            font-size: 1rem;
+            color: #777;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        .product-info p {
+            margin-bottom: 15px;
+            color: #666;
+        }
+        
+        /* Product Specifications */
+        .product-specs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .spec-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        
+        .spec-icon {
+            width: 24px;
+            height: 24px;
+            background-color: #f0e6d9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            color: #8a1538;
+        }
+        
+        /* Tasting Notes */
+        .tasting-notes {
+            background-color: #f9f5f0;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        
+        .tasting-notes h4 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #8a1538;
+            display: flex;
+            align-items: center;
+        }
+        
+        .tasting-notes h4 i {
+            margin-right: 8px;
+        }
+        
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .note-item {
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .note-item i {
+            margin-right: 5px;
+            color: #8a1538;
+        }
+        
+        /* Contact Form */
+        .contact {
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background-color: #8a1538;
+            margin: 15px auto 0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+        }
+        
+        /* FAQ Section */
+        .faq-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        
+        .faq-question {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-answer {
+            color: #666;
+            display: none;
+        }
+        
+        .faq-answer.active {
+            display: block;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #2c2c2c;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+        }
+        
+        .footer-links {
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .product-specs, .notes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">PREMIUM SPIRITS</div>
+            <nav>
+                <ul>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Exclusive Spirits Collection for Distributors</h1>
+            <p>Discover our premium aged spirits, crafted with excellence for discerning clients</p>
+            <a href="#products" class="btn">View Our Collection</a>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="products">
+        <div class="container">
+            <div class="products-intro">
+                <h2 class="section-title">Our Exclusive Collection</h2>
+                <p>Premium aged spirits for the luxury market</p>
+            </div>
+            
+            <div class="product-grid">
+                <!-- Product 1 - Akademos -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="assets/akademos-bottle.png" alt="AKADEMOS Cognac Bottle">
+                    </div>
+                    <div class="product-info">
+                        <h3>AKADEMOS</h3>
+                        <p class="product-subtitle">Divin - 25 Years Aged</p>
+                        <p>Strong drink, obtained on the basis of pelicular wine distillates, crystal amber color, aroma of roasted nuts, honey, sunflower flower, velvety and balanced aftertaste.</p>
+                        
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <div class="spec-icon"><i class="fas fa-thin fa-wine-glass"></i></div>
+                                <span>Type: Cognac</span>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-icon"><i class="fas fa-percentage"></i></div>
+                                <span>ABV: 40%</span>
+                            </div>
+                           <div class="spec-item">
+                                <div class="spec-icon"><i class="fas fa-wine-bottle"></i></div>
+                                <span>Volume: 0.7L</span>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-icon"><i class="fas fa-globe-europe"></i></div>
+                                <span>Origin: Moldova</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tasting-notes">
+                            <h4><i class="fas fa-wine-glass-alt"></i> Tasting Notes</h4>
+                            <div class="notes-grid">
+                                <div class="note-item"><i class="fas fa-check"></i> Honey</div>
+                                <div class="note-item"><i class="fas fa-check"></i> Walnut</div>
+                                <div class="note-item"><i class="fas fa-check"></i> Subtle floral</div>
+                            </div>
+                        </div>
+                        
+                        <div class="tasting-notes">
+                            <h4><i class="fas fa-utensils"></i> Serving Suggestions</h4>
+                            <div class="notes-grid">
+                                <div class="note-item"><i class="fas fa-thermometer-half"></i> Temperature: 16-18°C</div>
+                                <div class="note-item"><i class="fas fa-cheese"></i> Cheese</div>
+                                <div class="note-item"><i class="fas fa-drumstick-bite"></i> White meat</div>
+                            </div>
+                        </div>
+                        
+                        <a href="#contact" class="btn">Request Information</a>
+                    </div>
+                </div>
+                
+                <!-- Product 2 - Ambassador -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="assets/ambassador-bottle.png" alt="AMBASSADOR Cognac Bottle">
+                    </div>
+                    <div class="product-info">
+                        <h3>AMBASSADOR</h3>
+                        <p class="product-subtitle">Divin - 30 Years Aged</p>
+                        <p>Divin and select product with Spanish roots. Obtained on the basis of wine distillate matured for at least 30 years in century-old oak barrels.</p>
+                        
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <div class="spec-icon"><i class="fas fa-thin fa-wine-glass"></i></div>
+                                <span>Type: Cognac</span>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-icon"><i class="fas fa-percentage"></i></div>
+                                <span>ABV: 40%</span>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-icon"><i class="fas fa-wine-bottle"></i></div>
+                                <span>Volume: 0.7L</span>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-icon"><i class="fas fa-globe-europe"></i></div>
+                                <span>Origin: Moldova</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tasting-notes">
+                            <h4><i class="fas fa-wine-glass-alt"></i> Tasting Notes</h4>
+                            <div class="notes-grid">
+                                <div class="note-item"><i class="fas fa-check"></i> Almond</div>
+                                <div class="note-item"><i class="fas fa-check"></i> Tobacco</div>
+                                <div class="note-item"><i class="fas fa-check"></i> Dark chocolate</div>
+                                <div class="note-item"><i class="fas fa-check"></i> Dried fruit</div>
+                            </div>
+                        </div>
+                        
+                        <div class="tasting-notes">
+                            <h4><i class="fas fa-utensils"></i> Serving Suggestions</h4>
+                            <div class="notes-grid">
+                                <div class="note-item"><i class="fas fa-thermometer-half"></i> Temperature: 20-25°C</div>
+                                <div class="note-item"><i class="fas fa-cheese"></i> Cheese</div>
+                                <div class="note-item"><i class="fas fa-drumstick-bite"></i> Venison</div>
+                                <div class="note-item"><i class="fas fa-drumstick-bite"></i> Red meat</div>
+                            </div>
+                        </div>
+                        
+                        <a href="#contact" class="btn">Request Information</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <p style="text-align: center; margin-bottom: 30px;">Interested in distributing our premium spirits? Fill out the form below and our team will contact you.</p>
+            
+            <form id="distributor-form">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="company">Company Name</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <input type="text" id="country" name="country" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="interest">Product of Interest</label>
+                    <select id="interest" name="interest">
+                        <option value="">Select a product</option>
+                        <option value="akademos">AKADEMOS (25 Years)</option>
+                        <option value="ambassador">AMBASSADOR (30 Years)</option>
+                        <option value="both">Both Products</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="Tell us about your distribution capabilities and market..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn">Submit Inquiry</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What are the minimum order quantities? <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Minimum order quantities vary by region and product. Please contact us with your specific market details for more information.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Do you provide marketing materials? <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we provide comprehensive marketing support including POS materials, digital assets, and campaign support for our distribution partners.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What territories are available for distribution? <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We're currently expanding our distribution network across multiple regions. Contact us to check availability in your territory.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What is the shelf life of your products? <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our spirits have excellent stability and can be stored for extended periods without quality deterioration when kept in proper conditions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-logo">PREMIUM SPIRITS</div>
+            
+            <div class="footer-links">
+                <a href="#products">Products</a>
+                <a href="#contact">Contact</a>
+                <a href="#faq">FAQ</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            
+            <p class="copyright">© 2023 Premium Spirits Collection. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple FAQ toggle functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                answer.classList.toggle('active');
+                question.querySelector('span').textContent = answer.classList.contains('active') ? '−' : '+';
+            });
+        });
+        
+        // Form submission handling
+        document.getElementById('distributor-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your interest! Our team will contact you shortly.');
+            this.reset();
+        });
+    </script>
+
+    <script>
+        // Advanced Magnify on Hover Effect
+        document.querySelectorAll('.product-image').forEach(container => {
+            const img = container.querySelector('img');
+            const zoomLevel = 2; // How much to zoom in.
+            
+            container.addEventListener('mousemove', (e) => {
+                // 1. Calculate mouse position relative to the image
+                const rect = container.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // 2. Calculate the percentage position
+                const xPercent = Math.round(100 / rect.width * x);
+                const yPercent = Math.round(100 / rect.height * y);
+                
+                // 3. Set the zoom origin to the mouse position AND apply the zoom
+                img.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+                img.style.transform = `scale(${zoomLevel})`; // Apply the zoom via JS
+            });
+            
+            // Reset the zoom and origin when mouse leaves
+            container.addEventListener('mouseleave', () => {
+                img.style.transformOrigin = 'center center';
+                img.style.transform = 'scale(1)'; // Reset to original size
+            });
+        });
+    </script> 
+
+</body>
+</html>
