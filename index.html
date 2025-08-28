@@ -53,6 +53,18 @@
         }
         
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px; /* Space between the logo and text */
+        }
+
+        .logo-img {
+            height: 60px; /* Adjust this value to control the logo size */
+            width: auto; /* Maintains the aspect ratio */
+            display: block;
+        }
+
+        .logo-text {
             font-size: 24px;
             font-weight: 300;
             letter-spacing: 3px;
@@ -297,6 +309,23 @@
         .form-group textarea {
             min-height: 150px;
         }
+
+        /* Add asterisk to required field labels */
+        .form-group label[for]:has(+ input[required])::after,
+        .form-group label[for]:has(+ select[required])::after,
+        .form-group label[for]:has(+ textarea[required])::after {
+            content: " *";
+            color: #8a1538;
+        }
+
+        /* Style for invalid fields */
+        input:invalid, select:invalid, textarea:invalid {
+            border-color: #ff3860;
+        }
+
+        input:focus:invalid, select:focus:invalid, textarea:focus:invalid {
+            box-shadow: 0 0 0 0.125em rgba(255, 56, 96, 0.25);
+        }
         
         /* FAQ Section */
         .faq-item {
@@ -388,7 +417,10 @@
     <!-- Header -->
     <header>
         <div class="container header-content">
-            <div class="logo">PREMIUM SPIRITS</div>
+            <div class="logo">
+            <img src="assets/logo.png" alt="Premium Spirits Logo" class="logo-img">
+            <span class="logo-text">PREMIUM SPIRITS</span>
+            </div>
             <nav>
                 <ul>
                     <li><a href="#products">Products</a></li>
@@ -539,7 +571,7 @@
                 
                 <div class="form-group">
                     <label for="company">Company Name</label>
-                    <input type="text" id="company" name="company" required>
+                    <input type="text" id="company" name="company">
                 </div>
                 
                 <div class="form-group">
@@ -583,6 +615,15 @@
             <h2 class="section-title">Frequently Asked Questions</h2>
             
             <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What is Divin? <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Divin is the official name for Moldova's protected national spirit. It is a high-quality aged brandy produced using a similar traditional method as Cognac, but made exclusively in Moldova from local wine distillates. By law, it must be aged for at least three years in oak barrels. The name "Divin" is both a generic term for the product and a state-owned trademark, ensuring its authenticity and geographic origin.</p>
+                    </div>
+                </div>
+                
                 <div class="faq-item">
                     <div class="faq-question">
                         What are the minimum order quantities? <span>+</span>
@@ -647,6 +688,28 @@
             <p class="copyright">© 2025 Premium Spirits Collection. All rights reserved.</p>
         </div>
     </footer>
+    <script>
+        // Custom validation messages
+        document.getElementById('distributor-form').addEventListener('submit', function(e) {
+            const email = document.getElementById('email');
+            
+            // Custom email validation message
+            if (!email.validity.valid) {
+                if(email.validity.valueMissing) {
+                    email.setCustomValidity('Please enter your email address');
+                } else if(email.validity.typeMismatch) {
+                    email.setCustomValidity('Please enter a valid email address');
+                }
+            } else {
+                email.setCustomValidity('');
+            }
+        });
+
+        // Clear custom validation when user starts typing
+        document.getElementById('email').addEventListener('input', function() {
+            this.setCustomValidity('');
+        });
+    </script>
 
     <script>
         // Simple FAQ toggle functionality
