@@ -43,21 +43,9 @@
             align-items: center;
             padding: 15px 0;
         }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px; /* Space between the logo and text */
-        }
-
-        .logo-img {
-            height: 60px; /* Adjust this value to control the logo size */
-            width: auto; /* Maintains the aspect ratio */
-            display: block;
-        }
 
         .logo-text {
-            font-size: 24px;
+            font-size: 30px;
             font-weight: 300;
             letter-spacing: 3px;
             color: #8a1538; /* Deep wine color */
