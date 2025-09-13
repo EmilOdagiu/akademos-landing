@@ -1,5 +1,46 @@
+// Rate limiting configuration
+const RATE_LIMIT = {
+  MAX_REQUESTS: 5,    // Requests per window
+  WINDOW_SECONDS: 60, // Time window in seconds
+};
+
+async function checkRateLimit(request, env) {
+  const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
+  const key = `rate_limit:${clientIP}`;
+  
+  // Get current count
+  let count = await env.RATE_LIMIT_KV.get(key);
+  count = count ? parseInt(count) : 0;
+  
+  // Check if over limit
+  if (count >= RATE_LIMIT.MAX_REQUESTS) {
+    return { allowed: false, remaining: 0 };
+  }
+  
+  // Increment count
+  await env.RATE_LIMIT_KV.put(key, (count + 1).toString(), {
+    expirationTtl: RATE_LIMIT.WINDOW_SECONDS
+  });
+  
+  return { allowed: true, remaining: RATE_LIMIT.MAX_REQUESTS - count - 1 };
+}
+
 export default {
   async fetch(request, env) {
+    const rateLimit = await checkRateLimit(request, env);
+    if (!rateLimit.allowed) {
+      return new Response(JSON.stringify({ 
+        success: false, 
+        error: 'Too many requests. Please try again later.' 
+      }), {
+        status: 429,
+        headers: { 
+          'Content-Type': 'application/json',
+          ...corsHeaders,
+          'Retry-After': RATE_LIMIT.WINDOW_SECONDS.toString()
+        }
+      });
+    }
     // Handle CORS preflight requests
     if (request.method === 'OPTIONS') {
       return new Response(null, {
