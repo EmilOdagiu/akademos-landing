@@ -4,6 +4,22 @@ const RATE_LIMIT = {
   WINDOW_SECONDS: 60, // Time window in seconds
 };
 
+// CAPTCHA verification function
+async function verifyCaptcha(captchaResponse, secretKey, siteKey) {
+  const formData = new FormData();
+  formData.append('response', captchaResponse);
+  formData.append('secret', secretKey);
+  formData.append('sitekey', siteKey);
+  
+  const response = await fetch('https://hcaptcha.com/siteverify', {
+    method: 'POST',
+    body: formData
+  });
+  
+  const data = await response.json();
+  return data.success;
+}
+
 async function checkRateLimit(request, env) {
   const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
   const key = `rate_limit:${clientIP}`;
@@ -27,20 +43,6 @@ async function checkRateLimit(request, env) {
 
 export default {
   async fetch(request, env) {
-    const rateLimit = await checkRateLimit(request, env);
-    if (!rateLimit.allowed) {
-      return new Response(JSON.stringify({ 
-        success: false, 
-        error: 'Too many requests. Please try again later.' 
-      }), {
-        status: 429,
-        headers: { 
-          'Content-Type': 'application/json',
-          ...corsHeaders,
-          'Retry-After': RATE_LIMIT.WINDOW_SECONDS.toString()
-        }
-      });
-    }
     // Handle CORS preflight requests
     if (request.method === 'OPTIONS') {
       return new Response(null, {
@@ -68,6 +70,22 @@ export default {
       });
     }
 
+    // Rate limiting check
+    const rateLimit = await checkRateLimit(request, env);
+    if (!rateLimit.allowed) {
+      return new Response(JSON.stringify({ 
+        success: false, 
+        error: 'Too many requests. Please try again later.' 
+      }), {
+        status: 429,
+        headers: { 
+          'Content-Type': 'application/json',
+          ...corsHeaders,
+          'Retry-After': RATE_LIMIT.WINDOW_SECONDS.toString()
+        }
+      });
+    }
+
     try {
       // Parse the form data
       const formData = await request.formData();
@@ -78,9 +96,30 @@ export default {
       let country = formData.get('country') || '';
       let interest = formData.get('interest') || '';
       let message = formData.get('message') || '';
+      let captchaResponse = formData.get('h-captcha-response') || '';
+
+      // Verify CAPTCHA
+      const isCaptchaValid = await verifyCaptcha(
+        captchaResponse, 
+        env.HCAPTCHA_SECRET, 
+        env.HCAPTCHA_SITE_KEY
+      );
+
+      if (!isCaptchaValid) {
+        return new Response(JSON.stringify({ 
+          success: false, 
+          error: 'CAPTCHA verification failed' 
+        }), {
+          status: 400,
+          headers: { 
+            'Content-Type': 'application/json',
+            ...corsHeaders
+          }
+        });
+      }
 
       // Input sanitization and validation
-      name = name.trim().slice(0, 100); // Trim and limit length
+      name = name.trim().slice(0, 100);
       company = company.trim().slice(0, 100);
       email = email.trim().toLowerCase().slice(0, 100);
       phone = phone.trim().slice(0, 20);
@@ -97,7 +136,7 @@ export default {
           status: 400,
           headers: { 
             'Content-Type': 'application/json',
-            ...corsHeaders // Using spread operator for consistency 
+            ...corsHeaders
           }
         });
       }
@@ -124,7 +163,6 @@ export default {
       `).bind(name, company, email, phone, country, interest, message).run();
 
       if (success) {
-        // Return JSON success response
         return new Response(JSON.stringify({ 
           success: true,
           message: 'Thank you! We will contact you shortly.' 

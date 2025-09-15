@@ -1,0 +1,3 @@
+/ru/*  /index-ru.html  200
+/en/*  /index.html     200
+/      /index.html     200

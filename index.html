@@ -47,8 +47,8 @@
                     <img src="https://flagcdn.com/gb.svg" alt="English" width="24" height="18">
                 </button>
                 <ul class="language-menu" role="menu">
-                    <li role="none"><a role="menuitem" href="index.html"><img src="https://flagcdn.com/gb.svg" alt="English" width="18" height="14"> English</a></li>
-                    <li role="none"><a role="menuitem" href="index-ru.html"><img src="https://flagcdn.com/ru.svg" alt="Русский" width="18" height="14"> Русский</a></li>
+                    <li role="none"><a role="menuitem" href="/en/"><img src="https://flagcdn.com/gb.svg" alt="English" width="18" height="14"> English</a></li>
+                    <li role="none"><a role="menuitem" href="/ru/"><img src="https://flagcdn.com/ru.svg" alt="Русский" width="18" height="14"> Русский</a></li>
                 </ul>
             </div>
         </div>
@@ -454,11 +454,43 @@
             });
             
             // Add 'current' class to active language
-            const currentLang = window.location.pathname.includes('index-ru.html') ? 'ru' : 'en';
-            const currentLink = document.querySelector(`.language-menu a[href*="${currentLang === 'ru' ? 'index-ru' : 'index.html'}"]`);
-            if (currentLink) {
-                currentLink.classList.add('current');
+            function setCurrentLanguage() {
+                const path = window.location.pathname;
+                let currentLang = 'en'; // default to English
+                
+                // Detect language from URLs
+                if (path.startsWith('/ru/') || path === '/ru') {
+                    currentLang = 'ru';
+                } else if (path.startsWith('/en/') || path === '/en') {
+                    currentLang = 'en';
+                }
+                
+                // Remove current class from all links
+                document.querySelectorAll('.language-menu a.current').forEach(link => {
+                    link.classList.remove('current');
+                });
+                
+                // Add current class to active language link
+                const currentLink = document.querySelector(`.language-menu a[href*="/${currentLang}/"]`);
+                if (currentLink) {
+                    currentLink.classList.add('current');
+                }
+                
+                // Update the toggle button flag
+                const toggleImg = document.querySelector('.language-toggle img');
+                if (toggleImg) {
+                    if (currentLang === 'ru') {
+                        toggleImg.src = 'https://flagcdn.com/ru.svg';
+                        toggleImg.alt = 'Русский';
+                    } else {
+                        toggleImg.src = 'https://flagcdn.com/gb.svg';
+                        toggleImg.alt = 'English';
+                    }
+                }
             }
+
+            // Run on page load
+            setCurrentLanguage();
         })();
     </script>
 
