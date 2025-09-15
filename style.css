@@ -371,6 +371,86 @@
             font-size: 0.9rem;
         }
         
+        /* Language Switcher */
+        .language-switcher { 
+            position: relative; 
+            display: flex; 
+            align-items: center; 
+        }
+        
+        .language-toggle { 
+            background: none; 
+            border: none; 
+            cursor: pointer; 
+            padding: 0; 
+            line-height: 0; 
+        }
+        
+        .language-tooltip { 
+            position: absolute; 
+            top: 110%; 
+            right: 0; 
+            background: rgba(0,0,0,0.85); 
+            color: #fff; 
+            font-size: 12px; 
+            padding: 6px 8px; 
+            border-radius: 4px; 
+            white-space: nowrap; 
+            display: none; 
+            z-index: 1001; 
+        }
+        
+        .language-switcher:hover .language-tooltip { 
+            display: block; 
+        }
+        
+        .language-menu { 
+            position: absolute; 
+            right: 0; 
+            top: 120%; 
+            background: #fff; 
+            border: 1px solid #e5e7eb; 
+            border-radius: 8px; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.06); 
+            list-style: none; 
+            margin: 0; 
+            padding: 6px 0; 
+            min-width: 180px; 
+            display: none; 
+            z-index: 1000; 
+        }
+        
+        .language-menu.open { 
+            display: block; 
+        }
+        
+        .language-menu li { 
+            margin: 0; 
+        }
+        
+        .language-menu a { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            padding: 8px 12px; 
+            text-decoration: none; 
+            color: inherit; 
+        }
+        
+        .language-menu a:hover { 
+            background: #f3f4f6; 
+        }
+        
+        .language-menu img { 
+            display: inline-block; 
+            vertical-align: middle; 
+        }
+        
+        .language-menu .current {
+            background-color: #f8f9fa;
+            font-weight: 500;
+        }
+
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .product-specs, .notes-grid {
@@ -389,5 +469,10 @@
             
             nav li {
                 margin: 0 10px;
+            }
+            
+            .language-menu {
+                right: -50px;
+                min-width: 160px;
             }
         }
